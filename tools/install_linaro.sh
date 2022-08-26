@@ -33,9 +33,13 @@ pushd $INSTALL_DIR
 if [ x$OS == "xWindows_NT" ]
 then
 	GCCFILE=gcc-linaro-7.5.0-2019.12-i686-mingw32_arm-eabi
+elif [[ "$(uname -r | tr '[:upper:]' '[:lower:]')" == *"wsl"* ]]
+then
+	GCCFILE=gcc-linaro-7.5.0-2019.12-x86_64_arm-eabi
 else
 	GCCFILE=gcc-linaro-7.5.0-2019.12-i686_arm-eabi
 fi
+
 
 if [ -f ${GCCFILE}.tar.xz ]
 then
@@ -64,7 +68,8 @@ if [ -d newlib-cygwin ]
 then
 	echo Newlib directory found, skip cloning
 else
-	git clone http://sourceware.org/git/newlib-cygwin.git 
+	git clone https://github.com/longlongyang/newlib-cygwin-fork.git
+	mv newlib-cygwin-fork newlib-cygwin
 	pushd newlib-cygwin
 	git checkout cygwin-3_1_0-release
 	popd

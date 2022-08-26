@@ -1,19 +1,24 @@
-REPOSITORY=intel-socfpga-hwlib
-
-function compile_doxygen {
-rm -rf ../output
-mkdir ../output
-compile_armv7a
-compile_armv8
-
-pushd ../output
-mv ./armv7a_output ./armv7a
-mv ./armv8_output ./armv8
-cp -rf ../examples ./
+pushd ../
+REPOPATH=`pwd`
+REPOSITORY=`basename $REPOPATH`
 popd
 
-cp -rf ../output/armv7a/doc ../armv7a/
-cp -rf ../output/armv8/doc ../armv8/
+
+function compile_doxygen {
+
+	rm -rf ../output
+	mkdir ../output
+	compile_armv7a
+	compile_armv8
+
+	pushd ../output
+	mv ./armv7a_output ./armv7a
+	mv ./armv8_output ./armv8
+	cp -rf ../examples ./
+	popd
+
+	cp -rf ../output/armv7a/doc ../armv7a/
+	cp -rf ../output/armv8/doc ../armv8/
  
 }
 
@@ -59,6 +64,8 @@ function compile_armv7a {
 	PWD=`pwd`
     
 #Repeat for both armv7 and armv8
+	HPS=armv7a
+
 	pushd ../output
 	echo "COMPILE :: Creating a Temporary Folder for building the Hwlib $HPS"
 	rm -rf ./tmp_${HPS}

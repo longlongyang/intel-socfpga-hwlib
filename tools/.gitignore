@@ -1,0 +1,5 @@
+*.tar
+*.tar.xz
+newlib-cygwin
+gcc
+newlib
